@@ -32,6 +32,7 @@
 #include "rocker_tlv.h"
 #include "rocker_world.h"
 #include "rocker_of_dpa.h"
+#include "rocker_bpf.h"
 
 struct rocker {
     /* private */
@@ -1310,6 +1311,7 @@ static int pci_rocker_init(PCIDevice *dev)
     /* allocate worlds */
 
     r->worlds[ROCKER_WORLD_TYPE_OF_DPA] = of_dpa_world_alloc(r);
+    r->worlds[ROCKER_WORLD_TYPE_BPF] = bpf_world_alloc(r);
 
     for (i = 0; i < ROCKER_WORLD_TYPE_MAX; i++) {
         if (!r->worlds[i]) {

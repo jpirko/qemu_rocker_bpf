@@ -164,6 +164,10 @@ enum {
     ROCKER_TLV_CMD_TYPE_OF_DPA_GROUP_MOD,
     ROCKER_TLV_CMD_TYPE_OF_DPA_GROUP_DEL,
     ROCKER_TLV_CMD_TYPE_OF_DPA_GROUP_GET_STATS,
+    ROCKER_TLV_CMD_TYPE_BPF_PROG_ADD,
+    ROCKER_TLV_CMD_TYPE_BPF_PROG_MOD,
+    ROCKER_TLV_CMD_TYPE_BPF_PROG_DEL,
+    ROCKER_TLV_CMD_TYPE_BPF_PROG_GET_STATS,
 
     __ROCKER_TLV_CMD_TYPE_MAX,
     ROCKER_TLV_CMD_TYPE_MAX = __ROCKER_TLV_CMD_TYPE_MAX - 1,
@@ -187,6 +191,7 @@ enum {
 
 enum {
     ROCKER_PORT_MODE_OF_DPA,
+    ROCKER_PORT_MODE_BPF,
 };
 
 /* event msg */
@@ -475,6 +480,58 @@ enum rocker_of_dpa_overlay_type {
 #define ROCKER_GROUP_L3_UNICAST(index) \
     (ROCKER_GROUP_TYPE_SET(ROCKER_OF_DPA_GROUP_TYPE_L3_UCAST) |\
      ROCKER_GROUP_INDEX_LONG_SET(index))
+
+/*
+ * cmd info nested for BPF msgs
+ */
+
+enum {
+    ROCKER_TLV_BPF_PROG_UNSPEC,
+    ROCKER_TLV_BPF_PROG_COOKIE,              /* u64 */
+    ROCKER_TLV_BPF_PROG_IN_PPORT,            /* u32 */
+    ROCKER_TLV_BPF_PROG_CHUNK,               /* nest */
+
+    __ROCKER_TLV_BPF_PROG_MAX,
+    ROCKER_TLV_BPF_PROG_MAX = __ROCKER_TLV_BPF_PROG_MAX - 1,
+};
+
+/*
+ * BPF intruction chunk nest
+ */
+
+enum {
+    ROCKER_TLV_BPF_PROG_CHUNK_UNSPEC,
+    ROCKER_TLV_BPF_PROG_CHUNK_INSTS,          /* array */
+    ROCKER_TLV_BPF_PROG_CHUNK_LEN,            /* u32 */
+
+    __ROCKER_TLV_BPF_PROG_CHUNK_MAX,
+    ROCKER_TLV_BPF_PROG_CHUNK_MAX = __ROCKER_TLV_BPF_PROG_CHUNK_MAX - 1,
+};
+
+/*
+ * BPF intruction - array member
+ */
+
+enum {
+    ROCKER_TLV_BPF_PROG_CHUNK_INST_UNSPEC,
+    ROCKER_TLV_BPF_PROG_CHUNK_INST,           /* u64 */
+
+    __ROCKER_TLV_BPF_PROG_CHUNK_INST_MAX,
+    ROCKER_TLV_BPF_PROG_CHUNK_INST_MAX = __ROCKER_TLV_BPF_PROG_CHUNK_INST_MAX - 1,
+};
+
+/*
+ * BPF prog stats
+ */
+
+enum {
+    ROCKER_TLV_BPF_PROG_STAT_UNSPEC,
+    ROCKER_TLV_BPF_PROG_STAT_DURATION,    /* u32 */
+    ROCKER_TLV_BPF_PROG_STAT_RUNS,        /* u64 */
+
+    __ROCKER_TLV_BPF_PROG_STAT_MAX,
+    ROCKER_TLV_BPF_PROG_STAT_MAX = __ROCKER_TLV_BPF_PROG_STAT_MAX - 1,
+};
 
 /*
  * Rocker general purpose registers
